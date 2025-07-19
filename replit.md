@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-stack web application for a luxury ski chalet rental business in Gudauri, Georgia. The application serves as a marketing website and booking inquiry system, featuring real-time weather data, an image gallery, FAQ section, and contact form functionality.
+This is a Next.js 14 application optimized for Vercel deployment, showcasing a luxury ski chalet rental business in Gudauri, Georgia. The application serves as a marketing website and booking inquiry system, featuring real-time weather data, an image gallery, FAQ section, and contact form functionality. Successfully migrated from React SPA to Next.js on January 19, 2025.
 
 ## User Preferences
 
@@ -11,21 +11,21 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React 18 with TypeScript
+- **Framework**: Next.js 14 with App Router and TypeScript
 - **Styling**: Tailwind CSS with shadcn/ui component library
-- **Routing**: Wouter for client-side routing
 - **State Management**: TanStack Query (React Query) for server state
-- **Build Tool**: Vite for development and production builds
+- **Images**: Next.js optimized images with remote patterns
+- **SEO**: Built-in metadata API with Open Graph and Twitter cards
 
-The frontend follows a component-based architecture with a clean separation of concerns. Components are organized into UI components (shadcn/ui), feature components, and pages.
+The frontend follows Next.js App Router architecture with server and client components. All components are organized in src/ directory with proper 'use client' directives for interactive components.
 
 ### Backend Architecture
-- **Framework**: Express.js with TypeScript
-- **Database ORM**: Drizzle ORM configured for PostgreSQL
-- **Session Management**: In-memory storage for development (can be extended to database storage)
+- **Framework**: Next.js API Routes with TypeScript
+- **Data Storage**: In-memory storage for development inquiries
 - **API Integration**: OpenWeatherMap API for real-time weather data
+- **Deployment**: Optimized for Vercel serverless functions
 
-The backend uses a simple REST API architecture with route handlers for weather data and inquiry management.
+The backend uses Next.js API routes (/api/weather, /api/inquiries) providing serverless endpoints optimized for Vercel deployment.
 
 ## Key Components
 
