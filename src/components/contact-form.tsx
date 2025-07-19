@@ -1,130 +1,215 @@
-'use client'
+"use client"
 
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import { Loader2 } from "lucide-react";
-import type { InsertInquiry } from "@/types";
+import { useState } from "react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
+import { Loader2, Mail, Calendar, User, MessageSquare } from "lucide-react"
 
-export default function ContactForm() {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
+interface InquiryData {
+  name: string
+  email: string
+  checkIn: string
+  checkOut: string
+  message: string
+}
+
+export function ContactForm() {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
   
-  const [formData, setFormData] = useState<InsertInquiry>({
+  const [formData, setFormData] = useState<InquiryData>({
     name: "",
     email: "",
     checkIn: "",
     checkOut: "",
     message: ""
-  });
+  })
 
   const mutation = useMutation({
-    mutationFn: async (data: InsertInquiry) => {
-      return await apiRequest("POST", "/api/inquiries", data);
+    mutationFn: async (data: InquiryData) => {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+      if (!response.ok) throw new Error("Failed to send inquiry")
+      return response.json()
     },
     onSuccess: () => {
       toast({
         title: "Inquiry Sent!",
         description: "Thank you for your inquiry. We will get back to you soon.",
-      });
+      })
       setFormData({
         name: "",
         email: "",
         checkIn: "",
         checkOut: "",
         message: ""
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/inquiries"] });
+      })
+      queryClient.invalidateQueries({ queryKey: ["/api/inquiries"] })
     },
-    onError: (error: any) => {
+    onError: () => {
       toast({
         title: "Error",
-        description: error.message || "Failed to send inquiry. Please try again.",
+        description: "Failed to send inquiry. Please try again.",
         variant: "destructive",
-      });
+      })
     },
-  });
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email) {
-      toast({
-        title: "Required Fields",
-        description: "Please fill in your name and email address.",
-        variant: "destructive",
-      });
-      return;
-    }
+    e.preventDefault()
+    mutation.mutate(formData)
+  }
 
-    mutation.mutate(formData);
-  };
-
-  const handleInputChange = (field: keyof InsertInquiry, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input
-          type="text"
-          placeholder="Your Name"
-          value={formData.name}
-          onChange={(e) => handleInputChange("name", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:bg-white/30 focus:outline-none transition-all duration-300"
-          required
-        />
-        <Input
-          type="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={(e) => handleInputChange("email", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:bg-white/30 focus:outline-none transition-all duration-300"
-          required
-        />
+    <section className="py-24 px-6 lg:px-8 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/20 to-background" />
+      
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <Badge variant="secondary" className="glass-card mb-4 px-4 py-2">
+            Book Your Stay
+          </Badge>
+          <h2 className="minimal-large mb-6">
+            Contact Us
+          </h2>
+          <p className="minimal-text text-muted-foreground max-w-2xl mx-auto">
+            Ready to experience luxury in the mountains? Send us your inquiry and we'll help plan your perfect getaway.
+          </p>
+        </div>
+
+        <Card className="glass-card-strong border-0 hover-lift">
+          <CardHeader className="text-center pb-6">
+            <CardTitle className="text-2xl font-playfair font-light">
+              Request Information
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
+                    <User className="h-4 w-4 text-warm-gold" />
+                    Full Name
+                  </label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your full name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="glass-card border-0 bg-white/5 dark:bg-white/5 placeholder:text-muted-foreground/60"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-warm-gold" />
+                    Email Address
+                  </label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="glass-card border-0 bg-white/5 dark:bg-white/5 placeholder:text-muted-foreground/60"
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="checkIn" className="text-sm font-medium flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-warm-gold" />
+                    Check-in Date
+                  </label>
+                  <Input
+                    id="checkIn"
+                    name="checkIn"
+                    type="date"
+                    value={formData.checkIn}
+                    onChange={handleChange}
+                    required
+                    className="glass-card border-0 bg-white/5 dark:bg-white/5"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="checkOut" className="text-sm font-medium flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-warm-gold" />
+                    Check-out Date
+                  </label>
+                  <Input
+                    id="checkOut"
+                    name="checkOut"
+                    type="date"
+                    value={formData.checkOut}
+                    onChange={handleChange}
+                    required
+                    className="glass-card border-0 bg-white/5 dark:bg-white/5"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4 text-warm-gold" />
+                  Message
+                </label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  placeholder="Tell us about your stay preferences, group size, special requirements..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={6}
+                  className="glass-card border-0 bg-white/5 dark:bg-white/5 placeholder:text-muted-foreground/60 resize-none"
+                />
+              </div>
+
+              <div className="text-center pt-6">
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={mutation.isPending}
+                  className="button-soft hover-glow bg-warm-gold text-charcoal hover:bg-warm-gold/90 px-8 py-4 text-lg font-medium min-w-[200px]"
+                >
+                  {mutation.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Inquiry"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input
-          type="date"
-          placeholder="Check-in Date"
-          value={formData.checkIn || ""}
-          onChange={(e) => handleInputChange("checkIn", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:bg-white/30 focus:outline-none transition-all duration-300"
-        />
-        <Input
-          type="date"
-          placeholder="Check-out Date"
-          value={formData.checkOut || ""}
-          onChange={(e) => handleInputChange("checkOut", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:bg-white/30 focus:outline-none transition-all duration-300"
-        />
-      </div>
-      <Textarea
-        placeholder="Special Requests"
-        rows={4}
-        value={formData.message || ""}
-        onChange={(e) => handleInputChange("message", e.target.value)}
-        className="w-full px-4 py-3 rounded-xl border-0 bg-white/20 text-white placeholder-white/70 focus:bg-white/30 focus:outline-none transition-all duration-300 resize-none"
-      />
-      <Button 
-        type="submit"
-        disabled={mutation.isPending}
-        className="w-full bg-gold hover:bg-gold/90 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg disabled:transform-none"
-      >
-        {mutation.isPending ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending...
-          </>
-        ) : (
-          "Send Inquiry"
-        )}
-      </Button>
-    </form>
-  );
+    </section>
+  )
 }

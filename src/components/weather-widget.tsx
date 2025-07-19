@@ -1,116 +1,125 @@
-'use client'
+"use client"
 
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Loader2, CloudSnow, Wind, Droplets, Mountain } from "lucide-react";
-import type { WeatherData } from "@/types";
+import { useQuery } from "@tanstack/react-query"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { CloudSnow, Wind, Droplets, Thermometer, MapPin } from "lucide-react"
 
-export default function WeatherWidget() {
-  const { data: weather, isLoading, error } = useQuery<WeatherData>({
-    queryKey: ["/api/weather"],
+interface WeatherData {
+  temperature: number
+  condition: string
+  windSpeed: number
+  humidity: number
+  snowDepth: number
+  lastUpdated: string
+}
+
+export function WeatherWidget() {
+  const { data: weather, isLoading } = useQuery<WeatherData>({
+    queryKey: ['/api/weather'],
     refetchInterval: 10 * 60 * 1000, // Refetch every 10 minutes
-  });
+  })
 
   if (isLoading) {
     return (
-      <Card className="bg-white/10 backdrop-blur-md rounded-3xl p-8">
-        <CardContent className="p-0 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin" />
-          <span className="ml-2">Loading weather data...</span>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (error || !weather) {
-    return (
-      <Card className="bg-white/10 backdrop-blur-md rounded-3xl p-8">
-        <CardContent className="p-0 text-center">
-          <p className="text-white/80 mb-4">Unable to load weather data</p>
-          <p className="text-sm text-white/60">Please check back later</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  const getWeatherIcon = (condition: string) => {
-    switch (condition.toLowerCase()) {
-      case 'snow':
-      case 'light snow':
-        return '❄️';
-      case 'clear':
-        return '☀️';
-      case 'clouds':
-        return '☁️';
-      case 'rain':
-        return '🌧️';
-      default:
-        return '🌨️';
-    }
-  };
-
-  const getSkiCondition = (temperature: number, condition: string) => {
-    if (temperature <= -2 && condition.toLowerCase().includes('snow')) {
-      return { status: 'Excellent', color: 'bg-green-500', description: 'Fresh powder' };
-    } else if (temperature <= 2) {
-      return { status: 'Good', color: 'bg-blue-500', description: 'Good conditions' };
-    } else {
-      return { status: 'Fair', color: 'bg-yellow-500', description: 'Spring conditions' };
-    }
-  };
-
-  const skiCondition = getSkiCondition(weather.temperature, weather.condition);
-
-  return (
-    <Card className="bg-white/10 backdrop-blur-md rounded-3xl p-8 mb-8">
-      <CardContent className="p-0">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="text-6xl mb-2">{getWeatherIcon(weather.condition)}</div>
-            <div className="text-3xl font-bold mb-1">{weather.temperature}°C</div>
-            <div className="text-white/80">{weather.condition}</div>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-white/80 flex items-center">
-                <Wind className="h-4 w-4 mr-2" />
-                Wind Speed
-              </span>
-              <span className="font-semibold">{weather.windSpeed} km/h</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-white/80 flex items-center">
-                <Droplets className="h-4 w-4 mr-2" />
-                Humidity
-              </span>
-              <span className="font-semibold">{weather.humidity}%</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-white/80 flex items-center">
-                <CloudSnow className="h-4 w-4 mr-2" />
-                Snow Depth
-              </span>
-              <span className="font-semibold">{weather.snowDepth} cm</span>
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold mb-4 flex items-center">
-              <Mountain className="h-4 w-4 mr-2" />
-              Ski Conditions
-            </h3>
-            <div className="space-y-2">
-              <Badge className={`${skiCondition.color} text-white px-3 py-1 rounded-full text-sm`}>
-                {skiCondition.status}
-              </Badge>
-              <div className="text-sm text-white/80">{skiCondition.description}</div>
-              <div className="text-sm text-white/80">All lifts operational</div>
-            </div>
+      <section className="py-24 px-6 lg:px-8 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <div className="glass-card p-8 animate-pulse">
+            <div className="h-8 bg-muted rounded w-48 mx-auto mb-4"></div>
+            <div className="h-4 bg-muted/50 rounded w-64 mx-auto"></div>
           </div>
         </div>
-      </CardContent>
-    </Card>
-  );
+      </section>
+    )
+  }
+
+  if (!weather) {
+    return null
+  }
+
+  const getConditionIcon = (condition: string) => {
+    const lowerCondition = condition.toLowerCase()
+    if (lowerCondition.includes('snow')) {
+      return <CloudSnow className="h-12 w-12 text-blue-400" />
+    }
+    return <CloudSnow className="h-12 w-12 text-blue-400" />
+  }
+
+  return (
+    <section className="py-24 px-6 lg:px-8 relative overflow-hidden">
+      {/* Background with parallax effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 to-cyan-950/20 dark:from-blue-950/40 dark:to-cyan-950/40" />
+      
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <Badge variant="secondary" className="glass-card mb-4 px-4 py-2">
+            Live Weather Data
+          </Badge>
+          <h2 className="minimal-large mb-4">
+            Current Conditions
+          </h2>
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <MapPin className="h-5 w-5 text-warm-gold" />
+            <p className="minimal-text text-muted-foreground">
+              Gudauri Ski Resort, Georgia
+            </p>
+          </div>
+        </div>
+
+        <Card className="glass-card-strong border-0 hover-lift">
+          <CardHeader className="text-center pb-6">
+            <div className="flex justify-center mb-6">
+              {getConditionIcon(weather.condition)}
+            </div>
+            <CardTitle className="text-6xl font-light font-playfair text-foreground mb-2">
+              {weather.temperature}°C
+            </CardTitle>
+            <p className="text-xl text-muted-foreground capitalize font-light">
+              {weather.condition}
+            </p>
+          </CardHeader>
+          
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="text-center p-6 glass-card hover-lift">
+                <Wind className="h-8 w-8 text-warm-gold mx-auto mb-4" />
+                <p className="text-sm text-muted-foreground font-medium mb-2">Wind Speed</p>
+                <p className="text-2xl font-light text-foreground">
+                  {weather.windSpeed} km/h
+                </p>
+              </div>
+              
+              <div className="text-center p-6 glass-card hover-lift">
+                <Droplets className="h-8 w-8 text-warm-gold mx-auto mb-4" />
+                <p className="text-sm text-muted-foreground font-medium mb-2">Humidity</p>
+                <p className="text-2xl font-light text-foreground">
+                  {weather.humidity}%
+                </p>
+              </div>
+              
+              <div className="text-center p-6 glass-card hover-lift col-span-2 md:col-span-1">
+                <CloudSnow className="h-8 w-8 text-warm-gold mx-auto mb-4" />
+                <p className="text-sm text-muted-foreground font-medium mb-2">Snow Base</p>
+                <p className="text-2xl font-light text-foreground">
+                  {weather.snowDepth} cm
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <Thermometer className="h-5 w-5 text-warm-gold" />
+                <Badge className="glass-card bg-green-500/20 text-green-400 border-green-500/30">
+                  Excellent Ski Conditions
+                </Badge>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Last updated: {new Date(weather.lastUpdated).toLocaleTimeString()}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  )
 }

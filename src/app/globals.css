@@ -1,144 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400;500;600;700&family=Inter:wght@200;300;400;500;600&family=Montserrat:wght@200;300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
-  --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  /* Luxury Chalet Color Palette */
+  --charcoal: #1A1A1A;
+  --snow-white: #F8F8F8;
+  --warm-gold: #C9A96E;
+  --alpine-green: #2C5F41;
+  
+  /* Light Mode Variables */
+  --background: 248 248 248;
+  --foreground: 26 26 26;
+  --card: 255 255 255;
+  --card-foreground: 26 26 26;
+  --popover: 255 255 255;
+  --popover-foreground: 26 26 26;
+  --primary: 44 95 65;
+  --primary-foreground: 248 248 248;
+  --secondary: 240 240 240;
+  --secondary-foreground: 26 26 26;
+  --muted: 245 245 245;
+  --muted-foreground: 115 115 115;
+  --accent: 201 169 110;
+  --accent-foreground: 26 26 26;
+  --destructive: 220 38 38;
+  --destructive-foreground: 248 248 248;
+  --border: 229 229 229;
+  --input: 229 229 229;
+  --ring: 44 95 65;
   --radius: 0.5rem;
-
-  /* Custom luxury chalet colors */
-  --charcoal: hsl(0, 0%, 10.2%);
-  --snow: hsl(0, 0%, 97.3%);
-  --gold: hsl(41, 42.9%, 59.8%);
-  --alpine: hsl(143, 36.2%, 26.7%);
-  --dark-grey: hsl(0, 0%, 20%);
+  --chart-1: 12 76 138;
+  --chart-2: 173 109 244;
+  --chart-3: 197 130 43;
+  --chart-4: 22 163 74;
+  --chart-5: 249 115 22;
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 3.7%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
-  --radius: 0.5rem;
+  /* Dark Mode with Warm Tones */
+  --background: 20 20 20;
+  --foreground: 248 248 248;
+  --card: 26 26 26;
+  --card-foreground: 248 248 248;
+  --popover: 26 26 26;
+  --popover-foreground: 248 248 248;
+  --primary: 201 169 110;
+  --primary-foreground: 20 20 20;
+  --secondary: 40 40 40;
+  --secondary-foreground: 248 248 248;
+  --muted: 45 45 45;
+  --muted-foreground: 163 163 163;
+  --accent: 44 95 65;
+  --accent-foreground: 248 248 248;
+  --destructive: 239 68 68;
+  --destructive-foreground: 248 248 248;
+  --border: 55 55 55;
+  --input: 55 55 55;
+  --ring: 201 169 110;
+  --chart-1: 220 220 220;
+  --chart-2: 160 160 160;
+  --chart-3: 130 130 130;
+  --chart-4: 100 100 100;
+  --chart-5: 70 70 70;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-
+  
   body {
-    @apply font-sans antialiased bg-background text-foreground;
-    font-family: var(--font-inter), sans-serif;
+    @apply bg-background text-foreground font-inter antialiased;
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
   }
-
+  
   html {
     scroll-behavior: smooth;
   }
 }
 
-@layer utilities {
+@layer components {
   .font-playfair {
-    font-family: var(--font-playfair), serif;
+    font-family: 'Playfair Display', serif;
   }
 
   .font-inter {
-    font-family: var(--font-inter), sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
-  .text-charcoal {
-    color: var(--charcoal);
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
   }
 
-  .text-snow {
-    color: var(--snow);
+  /* Glassmorphism Effects */
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 shadow-xl rounded-2xl;
   }
 
-  .text-gold {
-    color: var(--gold);
+  .glass-card-strong {
+    @apply backdrop-blur-xl bg-white/20 dark:bg-white/10 border border-white/30 dark:border-white/20 shadow-2xl rounded-2xl;
   }
 
-  .text-alpine {
-    color: var(--alpine);
+  /* Large Minimal Fonts */
+  .minimal-hero {
+    @apply text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light tracking-wide font-playfair;
   }
 
-  .text-dark-grey {
-    color: var(--dark-grey);
+  .minimal-large {
+    @apply text-3xl md:text-4xl lg:text-5xl font-light tracking-wide font-playfair;
   }
 
-  .bg-charcoal {
-    background-color: var(--charcoal);
+  .minimal-medium {
+    @apply text-2xl md:text-3xl lg:text-4xl font-light tracking-wide font-inter;
   }
 
-  .bg-snow {
-    background-color: var(--snow);
+  .minimal-text {
+    @apply text-lg md:text-xl font-light tracking-wide font-inter;
   }
 
-  .bg-gold {
-    background-color: var(--gold);
+  /* Subtle Microinteractions */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out hover:transform hover:-translate-y-1 hover:shadow-lg;
   }
 
-  .bg-alpine {
-    background-color: var(--alpine);
+  .hover-glow {
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-amber-500/20;
   }
 
-  .bg-dark-grey {
-    background-color: var(--dark-grey);
+  .hover-heart {
+    @apply transition-all duration-300 ease-out hover:scale-110 hover:text-red-500;
   }
 
-  .bg-gradient-gold {
-    background: linear-gradient(135deg, var(--gold) 0%, hsl(41, 42.9%, 55%) 100%);
+  .button-soft {
+    @apply transition-all duration-200 ease-out hover:scale-105 active:scale-95 hover:shadow-lg;
   }
 
-  .border-gold {
-    border-color: var(--gold);
-  }
-
-  .border-alpine {
-    border-color: var(--alpine);
-  }
-
-  .hover\:bg-gold:hover {
-    background-color: var(--gold);
-  }
-
-  .hover\:text-gold:hover {
-    color: var(--gold);
-  }
-
+  /* Parallax Background */
   .parallax-bg {
     background-attachment: fixed;
     background-position: center;
@@ -146,7 +147,51 @@
     background-size: cover;
   }
 
-  .backdrop-blur-luxury {
-    backdrop-filter: blur(20px);
+  .parallax-section {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-muted rounded-lg;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-accent rounded-lg hover:bg-accent/80;
+  }
+}
+
+@layer utilities {
+  .text-charcoal {
+    color: var(--charcoal);
+  }
+
+  .text-warm-gold {
+    color: var(--warm-gold);
+  }
+
+  .text-alpine-green {
+    color: var(--alpine-green);
+  }
+
+  .bg-charcoal {
+    background-color: var(--charcoal);
+  }
+
+  .bg-warm-gold {
+    background-color: var(--warm-gold);
+  }
+
+  .bg-alpine-green {
+    background-color: var(--alpine-green);
+  }
+
+  .border-warm-gold {
+    border-color: var(--warm-gold);
   }
 }
