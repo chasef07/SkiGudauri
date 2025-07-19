@@ -17,27 +17,42 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Luxury Ski Chalet Rental - Gudauri, Georgia | Premium Alpine Retreat',
-  description: 'Experience luxury at our exclusive ski chalet in Gudauri, Georgia. Premium amenities, stunning mountain views, and direct access to world-class ski slopes.',
-  keywords: 'luxury ski chalet, Gudauri Georgia, ski rental, mountain resort, alpine retreat, luxury accommodation',
+  title: 'Stay Where the Powder Falls | Luxury Ski Chalet - Gudauri, Georgia',
+  description: 'Premium ski-in, ski-out chalet in Gudauri. Sleeps 12, panoramic mountain views, luxury amenities. Book your perfect alpine escape in the heart of the Caucasus Mountains.',
+  keywords: 'luxury ski chalet, Gudauri Georgia, ski-in ski-out, mountain chalet rental, alpine luxury, Caucasus skiing, premium accommodation',
   openGraph: {
     type: 'website',
-    title: 'Luxury Ski Chalet Rental - Gudauri, Georgia',
-    description: 'Experience luxury at our exclusive ski chalet in Gudauri, Georgia.',
+    title: 'Stay Where the Powder Falls | Luxury Ski Chalet - Gudauri',
+    description: 'Premium ski-in, ski-out chalet in Gudauri. Sleeps 12, panoramic mountain views, luxury amenities.',
+    url: 'https://alpine-luxury-gudauri.vercel.app',
+    siteName: 'Alpine Luxury Chalet',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1551524164-687a55dd1126?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=630',
         width: 1200,
         height: 630,
-        alt: 'Luxury Ski Chalet in Gudauri'
+        alt: 'Luxury Ski Chalet in Gudauri with Mountain Views'
       }
-    ]
+    ],
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Luxury Ski Chalet Rental - Gudauri, Georgia',
-    description: 'Experience luxury at our exclusive ski chalet in Gudauri, Georgia.',
-  }
+    title: 'Stay Where the Powder Falls | Luxury Ski Chalet - Gudauri',
+    description: 'Premium ski-in, ski-out chalet in Gudauri. Sleeps 12, panoramic mountain views.',
+    images: ['https://images.unsplash.com/photo-1551524164-687a55dd1126?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=630'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({

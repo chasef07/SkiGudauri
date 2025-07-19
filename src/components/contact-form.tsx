@@ -86,8 +86,13 @@ export function ContactForm() {
             Book Your Stay
           </Badge>
           <h2 className="minimal-large mb-6">
-            Contact Us
+            Check Availability
           </h2>
+          <div className="glass-card-strong max-w-md mx-auto p-4 mb-6">
+            <p className="text-warm-gold font-medium">
+              🔥 Only 3 weekends left this season!
+            </p>
+          </div>
           <p className="minimal-text text-muted-foreground max-w-2xl mx-auto">
             Ready to experience luxury in the mountains? Send us your inquiry and we'll help plan your perfect getaway.
           </p>

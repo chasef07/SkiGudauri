@@ -28,27 +28,14 @@ export function ParallaxHero() {
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
       
-      {/* Navigation */}
-      <nav className="relative z-20 flex justify-between items-center p-6 lg:p-8">
-        <div className="glass-card px-6 py-3">
-          <h1 className="text-xl font-playfair font-semibold text-white">
-            Alpine Luxury
-          </h1>
-        </div>
-        <div className="flex items-center gap-4">
-          <ThemeToggle />
-          <Button variant="ghost" size="icon" className="text-white hover-heart">
-            <Heart className="h-5 w-5" />
-          </Button>
-        </div>
-      </nav>
+
       
       {/* Hero Content */}
       <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
         <div className="max-w-4xl mx-auto">
           <div className="glass-card-strong p-8 lg:p-12">
             <h1 className="minimal-hero text-white mb-6">
-              Luxury Ski Chalet
+              Stay Where the Powder Falls
             </h1>
             <div className="flex items-center justify-center gap-2 mb-8">
               <MapPin className="h-6 w-6 text-warm-gold" />
@@ -63,13 +50,15 @@ export function ParallaxHero() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 className="button-soft minimal-text bg-warm-gold text-charcoal hover:bg-warm-gold/90 font-medium px-8 py-4"
               >
-                Book Your Stay
+                Check Availability
               </Button>
               <Button 
                 variant="outline" 
                 size="lg" 
+                onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
                 className="button-soft minimal-text border-white/30 text-white hover:bg-white/10 font-medium px-8 py-4"
               >
                 View Gallery
